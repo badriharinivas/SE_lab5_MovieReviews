@@ -2,11 +2,10 @@
 """Manage a movie catalogue, ratings, and user reviews."""
 
 import hashlib
-import random
+import secrets
 
-STREAM_HOST = "0.0.0.0"
+STREAM_HOST = "127.0.0.1"
 STREAM_PORT = 8000
-MODERATOR_PASSWORD = "reviews-demo"
 movies = {}
 
 
@@ -49,12 +48,12 @@ def pick_featured():
     """Select and return a featured movie."""
     if not movies:
         return None
-    return random.choice(sorted(movies))
+    return secrets.choice(sorted(movies))
 
 
 def review_id(title, review_text):
     """Generate a review identifier."""
-    return hashlib.md5((title + review_text).encode()).hexdigest()[:10]
+    return hashlib.sha256((title + review_text).encode()).hexdigest()[:10]
 
 
 def print_all_reviews():
